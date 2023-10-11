@@ -19,6 +19,11 @@ public class ShootEnemy : MonoBehaviour, IObserver
         InvokeRepeating("Shoot", 2, rand);
     }
 
+    void Awake()
+    {
+        GameManager.GetInstance().OnProgressionChanged += Execute;
+    }
+
     void Shoot()
     {
         if (onRange)
@@ -31,12 +36,9 @@ public class ShootEnemy : MonoBehaviour, IObserver
         }
     }
 
-    public void Execute(ISubject subject)
+    public void Execute(int progression)
     {
-        if (subject is GameManager)
-        {
-            bulletImpulse = ((GameManager)subject).Progression;
-        }
+        bulletImpulse += progression;        
     }
 
     void Update()

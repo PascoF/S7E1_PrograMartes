@@ -13,6 +13,7 @@ public class Enemigo : MonoBehaviour, IObserver
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        GameManager.GetInstance().OnProgressionChanged += Execute;
     }
 
     void Start()
@@ -20,14 +21,11 @@ public class Enemigo : MonoBehaviour, IObserver
         GameManager.Instance.Attach(this);
     }
 
-    public void Execute(ISubject subject)
-    {
-        if (subject is GameManager)
-        {
-            speed = ((GameManager)subject).Progression;
-        }
-    }
 
+    public void Execute(int progression)
+    {
+        speed += progression;
+    }
 
     void Update()
     {
