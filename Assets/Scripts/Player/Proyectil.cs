@@ -17,13 +17,18 @@ public class Proyectil : MonoBehaviour, IObserver
     {
         GameManager.Instance.Attach(this);
     }
-    public void Execute(ISubject subject)
+    public void Execute(int progression)
     {
-        if (subject is GameManager)
-        {
-            velocidad = ((GameManager)subject).Progression * 2;
-        }
+
+        velocidad += progression;
+
     }
+
+    void Awake()
+    {
+        GameManager.GetInstance().OnProgressionChanged += Execute;
+    }
+
     void Update()
     {
 

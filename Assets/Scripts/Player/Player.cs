@@ -12,6 +12,8 @@ public class Player : MonoBehaviour, IObserver
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        GameManager.GetInstance().OnProgressionChanged += Execute;
+
     }
 
     void Start()
@@ -20,12 +22,11 @@ public class Player : MonoBehaviour, IObserver
         GameManager.Instance.Attach(this);
     }
 
-    public void Execute(ISubject subject)
+    public void Execute(int progression)
     {
-        if (subject is GameManager)
-        {
-            speed = ((GameManager)subject).Progression;
-        }
+
+        speed += progression;
+        
     }
 
 
