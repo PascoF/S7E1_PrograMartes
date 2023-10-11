@@ -5,11 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour, ISubject
 {
     private static GameManager instance;
+    public event Action<int> OnProgressionChanged;
 
     private float timer;
     private int progression;
 
     private List<IObserver> observers;
+
 
     public int Progression
     {
@@ -19,12 +21,9 @@ public class GameManager : MonoBehaviour, ISubject
         }
     }
 
-    public static GameManager Instance
+    public static GameManager GetInstance
     {
-        get
-        {
             return instance;
-        }
     }
 
     void Awake()
@@ -57,7 +56,7 @@ public class GameManager : MonoBehaviour, ISubject
         if (timer >= progression)
         {
             progression++;
-            Notify();
+            OnProgressionChanged(progression);
         }
     }
 }
